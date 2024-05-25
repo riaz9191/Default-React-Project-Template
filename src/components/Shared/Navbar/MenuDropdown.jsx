@@ -1,22 +1,19 @@
-import { AiOutlineMenu } from 'react-icons/ai'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import useAuth from '../../../hooks/useAuth'
-import avatarImg from '../../../assets/images/placeholder.jpg'
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AiOutlineMenu } from 'react-icons/ai';
+import { FaChevronDown } from 'react-icons/fa';
+import useAuth from '../../../hooks/useAuth';
+import avatarImg from '../../../assets/images/placeholder.jpg';
 
 const MenuDropdown = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { user } = useAuth()
+  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
+  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState(false);
 
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
-        {/* Become A Host btn */}
-        <div className='hidden md:block'>
-          <button className='disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition'>
-            Host your home
-          </button>
-        </div>
         {/* Dropdown btn */}
         <div
           onClick={() => setIsOpen(!isOpen)}
@@ -45,7 +42,66 @@ const MenuDropdown = () => {
             >
               Home
             </Link>
-
+            <div
+              className='block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold relative flex items-center'
+              onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)}
+            >
+              About Us
+              <FaChevronDown
+                className={`ml-1 transition-transform duration-300 ${
+                  isAboutDropdownOpen ? 'rotate-180' : ''
+                }`}
+              />
+              {isAboutDropdownOpen && (
+                <div className='absolute top-8 left-7 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10'>
+                  <Link
+                    to='/about/team'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Our Team
+                  </Link>
+                  <Link
+                    to='/about/history'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Our History
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div
+              className='block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold relative flex items-center'
+              onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+            >
+              Business
+              <FaChevronDown
+                className={`ml-1 transition-transform duration-300 ${
+                  isBusinessDropdownOpen ? 'rotate-180' : ''
+                }`}
+              />
+              {isBusinessDropdownOpen && (
+                <div className='absolute top-8 left-7 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10'>
+                  <Link
+                    to='/business/services'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Services
+                  </Link>
+                  <Link
+                    to='/business/partners'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Partners
+                  </Link>
+                </div>
+              )}
+            </div>
+            <Link
+              to='/contact'
+              className='block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+            >
+              Contact
+            </Link>
             <Link
               to='/login'
               className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
@@ -62,7 +118,7 @@ const MenuDropdown = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MenuDropdown
+export default MenuDropdown;
